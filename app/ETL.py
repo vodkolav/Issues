@@ -11,7 +11,7 @@ port = '3306'
 db = 'issues'
 user = 'jira'
 password = 'jira'
-DataPath = pathlib.Path('../Data')
+DataPath = pathlib.Path('Data')
 
 files = list(DataPath.glob('*.csv'))
 
@@ -40,7 +40,8 @@ def run_query(query, host, user, password, database = None ):
         sys.exit(1)
 
 
-query = f"drop database {db};"
+query = f"drop database if exists {db};"
+run_query(query, host, user, password, database='')
 query = f"create database {db};"
 run_query(query, host, user, password, database='')
 
