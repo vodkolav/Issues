@@ -11,10 +11,11 @@ port = '3306'
 db = 'issues'
 user = 'jira'
 password = 'jira'
-DataPath = pathlib.Path('Data')
+DataPath = pathlib.Path('../Data').resolve()
 
 files = list(DataPath.glob('*.csv'))
-
+print(DataPath)
+print(files)
 
 def run_query(query, host, user, password, database = None ):
     '''
@@ -62,7 +63,8 @@ for file in files:
        
         remove_bom(file)
         
-        command =  f'csvsql --dialect mysql --snifflimit 100000 {filepath} > {folder}/{table}.sql'
+        command =  f'csvsql --dialect mysql --snifflimit 1000 -i mysql {filepath} > {folder}/{table}.sql'
+
         print('>>>' + command)
         os.system(command)
         
@@ -73,6 +75,8 @@ for file in files:
         load_query = f"LOAD DATA LOCAL INFILE '{filepath}' INTO TABLE {db}.{table} FIELDS TERMINATED BY ',' ENCLOSED BY '\"' IGNORE 1 LINES;"
         print('>>>' + load_query)
         run_query(load_query, host, user, password, db)
-        
+    except KeyboardInterrupt :
+        print('Stopping')
+        break;
     except :
         print('skipping' + f'{folder}/{table}.sql')
