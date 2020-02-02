@@ -21,8 +21,7 @@ print(files)
 
 def run_query(query, host, user, password, database = None ):
     '''
-    This function load a csv file to MySQL table according to
-    the query statement.
+    run any query
     '''
     try:
         con = pymysql.connect(host=host,
@@ -64,21 +63,21 @@ for file in files:
     try:
        
         remove_bom(file)
-        
-        command =  f'csvsql --dialect mysql --snifflimit 1000 -i mysql {filepath} > {folder}/{table}.sql'
 
+        #scan the csv file to infer schema from its contents and put it in an sql file
+        command =  f'csvsql --dialect mysql --snifflimit 100000 {filepath} > {folder}/{table}.sql'
         print('>>>' + command)
         os.system(command)
         
+        #create db table from the sql file schema
         create_query = pathlib.Path(f'{folder}/{table}.sql').read_text(encoding='utf-8-sig')
         print('>>>' + create_query)
         run_query(create_query, host, user, password, db)
       
+        # tell mysql to load data from csv file to the newly created table
         load_query = f"LOAD DATA LOCAL INFILE '{filepath}' INTO TABLE {db}.{table} FIELDS TERMINATED BY ',' ENCLOSED BY '\"' IGNORE 1 LINES;"
         print('>>>' + load_query)
         run_query(load_query, host, user, password, db)
-    except KeyboardInterrupt :
-        print('Stopping')
-        break;
+        
     except :
         print('skipping' + f'{folder}/{table}.sql')
