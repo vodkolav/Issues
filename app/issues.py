@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 import API 
 
 app = Flask(__name__)
@@ -11,10 +11,12 @@ def hello():
 def test():
     Issue = request.args['Issue']
     Time = request.args['Time']
-    return jsonify(API.GetIssueAtTime(Issue, Time))
-
+    try:
+        return jsonify(API.GetIssueAtTime(Issue, Time))
+    except Exception as e:
+        abort(404)
 if __name__ == '__main__':
-  app.run()
+  app.run(host='0.0.0.0')
 
 
 #http://127.0.0.1:5000/GetIssueAtTime?Issue=163623&Time=186461716436622
