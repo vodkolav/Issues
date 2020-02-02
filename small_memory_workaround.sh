@@ -18,5 +18,5 @@ db=issues
 
 mysql -u$usr -p$pass -D$db -e "truncate table changegroup_changeitem;"
 
-mysql -u$usr -p$pass -D$db -e "LOAD DATA LOCAL INFILE '/home/michael/Issues/Data/changegroup_changeitem.csv' INTO TABLE issues.changegroup_changeitem FIELDS TERMINATED BY ',' ENCLOSED BY '""' IGNORE 1 LINES;"
+mysql -u$usr -p$pass -D$db -e "LOAD DATA LOCAL INFILE '/Data/changegroup_changeitem.csv' INTO TABLE issues.changegroup_changeitem FIELDS TERMINATED BY ',' ENCLOSED BY '""' IGNORE 1 LINES;"
 

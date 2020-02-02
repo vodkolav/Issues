@@ -1,8 +1,0 @@
-version: '2.1'
-
-services:
-  issues:
-    image: issues
-    build: .
-    ports:
-      - 5000:5000
