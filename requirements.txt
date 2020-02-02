@@ -8,3 +8,4 @@ mysql-connector-python==8.0.18
 pandas==0.25.3
 csvkit==1.0.4
 pymysql==0.9.3
+
