@@ -51,7 +51,7 @@ def GetIssueAtTime(issueid, AtTime):
     ORDER by CREATED DESC 
     limit 1""", con)
 
-    fetch the issue
+    #fetch the issue
     issue = pd.read_sql(f"""
     select i.*, t.pname as issue_type 
     from jiraissue i
