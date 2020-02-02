@@ -4,17 +4,20 @@ import pymysql
 import pandas as pd
 import pathlib
 
+# log = open("ETL.log", "a")
+# sys.stdout = log
 #Parameters
+
 
 host = 'localhost'
 port = '3306'
 db = 'issues'
 user = 'jira'
 password = 'jira'
-DataPath = pathlib.Path('Data')
-
+DataPath = pathlib.Path('../Data').resolve()
+print(DataPath)
 files = list(DataPath.glob('*.csv'))
-
+print(files)
 
 def run_query(query, host, user, password, database = None ):
     '''
@@ -31,7 +34,7 @@ def run_query(query, host, user, password, database = None ):
         # Create cursor and execute Load SQL
         cursor = con.cursor()
         cursor.execute(query)
-        print('query run succuessfully.')
+        print('query run successfully.')
         con.close()
         return cursor.fetchall()
        
