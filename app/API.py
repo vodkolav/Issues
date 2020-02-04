@@ -64,7 +64,7 @@ def GetIssueAtTime(issueid, AtTime):
     # go from latest change to ealiest and harvest (into 'now' variable) only the last change in each of the fields of interest
     for _, row in changes.iterrows():
 
-        #is req_fields becomes empty before the loop end, then we found all the interesting fields. no point continuing.
+        #if req_fields becomes empty before the loop end, then we've found all the interesting fields. no point continuing.
         if not req_fields:
             break
             

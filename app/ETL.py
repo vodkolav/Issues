@@ -81,3 +81,9 @@ for file in files:
         
     except :
         print('skipping' + f'{folder}/{table}.sql')
+
+index_changes = "create index change_issueid_created on changegroup_changeitem ( issueid, CREATED);"
+run_query(index_changes, host, user, password, db)
+
+index_issue =  "create index issue_id_created on jiraissue ( ID, CREATED);"
+run_query(index_issue, host, user, password, db)
